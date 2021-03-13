@@ -1,5 +1,5 @@
 import express from "express";
-import { create } from "./file.controller";
+import { create, get } from "./file.controller";
 
 import multer from "multer";
 import { folder } from "./file.service";
@@ -21,3 +21,4 @@ const upload = multer({
 }).single("media");
 
 fileRouter.route("/upload").post(upload, create);
+fileRouter.route("/:id").get(get);

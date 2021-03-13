@@ -1,18 +1,19 @@
 ## Test Base URL : https://admoni.herokuapp.com
 
-
 `Upload File`
 
 `POST /file/upload`
 
-__Request__
+**Request**
+
 ```javascript
 formData {
   media: fileObject
 }
 ```
 
-__Response__
+**Response**
+
 ```javascript
 {
     "status": true,
@@ -20,4 +21,14 @@ __Response__
         "id": "604cf103886256679bf2cb97"
     }
 }
+```
+
+`Fetch File by id`
+
+`GET /file/:id`
+
+**Response**
+
+```javascript
+fileObject
 ```

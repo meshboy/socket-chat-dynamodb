@@ -37,16 +37,8 @@ const FileTableAttributes = {
       AttributeName: "id",
       KeyType: "HASH",
     },
-
-    {
-      AttributeName: "extension",
-      KeyType: "RANGE",
-    },
   ],
-  AttributeDefinitions: [
-    { AttributeName: "id", AttributeType: "S" },
-    { AttributeName: "extension", AttributeType: "S" },
-  ],
+  AttributeDefinitions: [{ AttributeName: "id", AttributeType: "S" }],
   ProvisionedThroughput: {
     ReadCapacityUnits: 10,
     WriteCapacityUnits: 10,

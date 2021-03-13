@@ -93,3 +93,42 @@ const saveFile = (model: FileModel) => {
     });
   });
 };
+
+export const getFile = async ({ id, res }) => {
+
+  const params = {
+    TableName: FileTableName,
+    Key: {
+      id,
+    },
+  };
+
+  DynamoDb().get(params, function (err, data) {
+    if (err) {
+      return res.status(NOT_FOUND).send({
+        status: false,
+        message: `File ${id} not found`,
+      });
+    }
+
+    const item: FileModel = data.Item;
+    const extension = item.extension;
+
+    const fileKey = `${item.id}.${extension}`;
+    const s3Params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileKey,
+    };
+    S3().getObject(s3Params, (err, data) => {
+      if (err) {
+        res.status(NOT_FOUND).send({
+          status: false,
+          message: `File ${item.id} not found`,
+        });
+      } else {
+        res.attachment(`${item.id}.${extension}`);
+        res.send(data.Body);
+      }
+    });
+  });
+};
