@@ -7,7 +7,12 @@ import { router } from "./router";
 import middleware from "./middleware";
 
 import dotenv from "dotenv";
+import { connect } from "./db";
 dotenv.config();
+
+connect()
+  .then(() => {})
+  .catch(() => {});
 
 const app = express();
 app.use(compression());

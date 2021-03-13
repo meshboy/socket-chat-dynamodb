@@ -4,15 +4,12 @@ import {
 
 export const create = (req, res) => {
   const file = req.file;
-  if (!req.query.format) {
-    req.query.format = "image";
-  }
-  const { format, isPublic } = req.query;
-  uploadFile(file, format, isPublic)
+  uploadFile(file)
     .then((dataObj) => {
       res.status(dataObj.statusCode).send({ status: true, data: dataObj.data });
     })
     .catch((e) => {
+      console.log(e)
       res.status(e.statusCode).send({ status: false, message: e.message });
     });
 };

@@ -1,10 +1,12 @@
 import express from "express";
 import { errorHandler } from "./modules/error-handler";
 import { secureRoute } from "./middleware";
-import { fileRouter } from "./resources";
+import { fileRouter } from "./resources/media";
+import { helloRouter } from "./resources/health";
 
 export const router = express.Router();
 router.use(secureRoute);
 
+router.use("/", helloRouter);
 router.use("/file", fileRouter);
 router.use(errorHandler);
