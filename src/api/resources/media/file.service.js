@@ -6,7 +6,7 @@ import { S3 } from "../config/aws/config.aws.s3";
 import { getFileAttribute } from "../../modules/file.format";
 import type { FileAttribute, FileModel } from "./file.model";
 import { DynamoDb, FileTableName } from "../config/aws/config.aws.dynamodb";
-export const folder = __dirname + "./../uploads";
+export const folder = __dirname + "/uploads";
 
 export const uploadFile = (file) => {
   if (!file) {
