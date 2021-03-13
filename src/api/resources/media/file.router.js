@@ -15,11 +15,9 @@ const storage = multer.diskStorage({
   },
 });
 
-// 2MB in bytes
-const maxSize = 2097152;
-
-const upload = multer({ storage, limits: { fileSize: maxSize } }).single(
-  "media"
-);
+const upload = multer({
+  storage,
+  limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE_IN_BYTES) },
+}).single("media");
 
 fileRouter.route("/upload").post(upload, create);
