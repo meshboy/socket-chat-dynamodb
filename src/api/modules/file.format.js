@@ -2,7 +2,7 @@ import type { FileAttribute, SupportFile } from "../resources/media/file.model";
 
 const Video = ["avi", "mp4", "mpg", "mov", "wmv"];
 const Audio = ["aac", "au", "mid", "mp3", "ra", "snd", "wma", "wav"];
-const Image = ["bmp", "eps", "gif", "jpg", "pict", "png", "psd", "tif"];
+const Image = ["bmp", "eps", "gif", "jpg", "pict", "png", "psd", "tif", "jpeg"];
 const Text = ["asc", "doc", "docx", "rtf", "msg", "pdf", "txt", "wpd", "wps"];
 const Compressed = ["arc", "arj", "gz", "hqx", "rar", "sit", "tar", "z", "zip"];
 
@@ -30,6 +30,7 @@ const fileAttribute: FileAttribute = (extension: string) => {
       return { type: fileFormatObject.type, extension };
     }
   }
+  console.log(extension)
   throw "File is not supported";
 };
 

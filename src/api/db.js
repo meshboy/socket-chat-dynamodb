@@ -1,10 +1,9 @@
-import {
-  CreateFileTable,
-  DynamoTable,
-} from "./resources/config/aws/config.aws.dynamodb";
 import logger from "./logger";
+import { DynamoTable } from "./resources/config/aws/config.aws.dynamodb";
+import { UserTable } from "./resources/config/aws/user.aws.dynamodb";
+import { FileTable } from "./resources/config/aws/file.aws.dynamodb";
 
-const tables = [CreateFileTable];
+const tables = [FileTable, UserTable];
 
 export const connect = async () => {
   for (let i = 0; i < tables.length; i++) {

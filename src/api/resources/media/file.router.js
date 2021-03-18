@@ -4,7 +4,7 @@ import { create, get } from "./file.controller";
 import multer from "multer";
 import { folder } from "./file.service";
 
-export const fileRouter = express.Router();
+export const FileRouter = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,5 +20,5 @@ const upload = multer({
   limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE_IN_BYTES) },
 }).single("media");
 
-fileRouter.route("/upload").post(upload, create);
-fileRouter.route("/:id").get(get);
+FileRouter.route("/upload").post(upload, create);
+FileRouter.route("/:id").get(get);

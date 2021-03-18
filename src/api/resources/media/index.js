@@ -1,1 +1,1 @@
-export { fileRouter } from "./file.router";
+export { FileRouter } from "./file.router";

@@ -5,7 +5,8 @@ import logger from "../../logger";
 import { S3 } from "../config/aws/config.aws.s3";
 import { getFileAttribute } from "../../modules/file.format";
 import type { FileAttribute, FileModel } from "./file.model";
-import { DynamoDb, FileTableName } from "../config/aws/config.aws.dynamodb";
+import { FileTableName } from "../config/aws/file.aws.dynamodb";
+import { DynamoDb } from "../config/aws/config.aws.dynamodb";
 export const folder = __dirname + "/uploads";
 
 export const uploadFile = (file) => {
@@ -95,7 +96,6 @@ const saveFile = (model: FileModel) => {
 };
 
 export const getFile = async ({ id, res }) => {
-
   const params = {
     TableName: FileTableName,
     Key: {

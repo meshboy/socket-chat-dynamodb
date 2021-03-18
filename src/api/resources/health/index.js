@@ -1,1 +1,1 @@
-export { helloRouter } from "./hello.router";
+export { HelloRouter } from "./hello.router";
