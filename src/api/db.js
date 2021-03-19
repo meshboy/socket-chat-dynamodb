@@ -2,8 +2,9 @@ import logger from "./logger";
 import { DynamoTable } from "./resources/config/aws/config.aws.dynamodb";
 import { UserTable } from "./resources/config/aws/user.aws.dynamodb";
 import { FileTable } from "./resources/config/aws/file.aws.dynamodb";
+import { ChatTable } from "./resources/config/aws/chat.aws.dynamodb";
 
-const tables = [FileTable, UserTable];
+const tables = [FileTable, UserTable, ChatTable];
 
 export const connect = async () => {
   for (let i = 0; i < tables.length; i++) {

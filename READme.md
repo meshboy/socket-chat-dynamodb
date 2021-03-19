@@ -54,14 +54,12 @@ _Request_
 _Response_
 
 ```javascript
-{
-    "status": true,
+  "status": true,
     "data": {
         "id": "08164663352",
         "timeCreated": 1616063749959,
-        "timeUpdated": 1616063749959
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA4MTY0NjYzMzUyIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MTYwOTEyNjl9.S2srOnvBiPRJjI5ojEdYJj9rA5lSKoaxfCczYbTaxwc"
     }
-}
 ```
 
 `Validate if id is on admoni server`
@@ -98,3 +96,8 @@ _Response_
     ]
 }
 ```
+
+
+chat topics 
+
+- authentication (payload : { token })

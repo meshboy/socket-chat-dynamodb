@@ -1,7 +1,7 @@
 export type User = {
   id: string,
+  token: string,
   timeCreated: number,
-  timeUpdated: number,
 };
 
 export type UserValidity = {

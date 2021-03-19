@@ -1,5 +1,5 @@
 {
-  "name": "admoni-service",
+  "name": "admoni-chat-service",
   "version": "1.0.0",
   "description": "Chat Api",
   "main": "lib/index.js",
@@ -15,7 +15,7 @@
     "node",
     "js"
   ],
-  "author": "Meshileya Seun (info@meshileyaseun.dev)",
+  "author": "Meshileya Seun (meshileyaseun@gmail.com)",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -40,6 +40,7 @@
   "dependencies": {
     "aws-sdk": "^2.598.0",
     "basic-auth": "^2.0.1",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
@@ -47,10 +48,14 @@
     "events": "^3.0.0",
     "express": "^4.16.3",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.0",
     "multer": "^1.4.2",
+    "redis": "^3.0.2",
     "restify-cors-middleware": "^1.1.1",
     "socket.io": "^4.0.0",
+    "socket.io-redis": "^6.1.0",
+    "socketio-auth": "^0.1.1",
     "tsscmp": "^1.0.6",
     "winston": "^3.2.1"
   }

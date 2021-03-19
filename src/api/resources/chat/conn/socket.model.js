@@ -1,0 +1,4 @@
+export const SocketStatus = {
+  UN_AUTHORISED: "UN_AUTHORISED",
+  ALREADY_LOGGED_IN: "ALREADY_LOGGED_IN",
+};

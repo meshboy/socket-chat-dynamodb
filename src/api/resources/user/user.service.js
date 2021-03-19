@@ -1,10 +1,12 @@
 import Joi from "joi";
-import { BAD_REQUEST, OK } from "../../modules/status";
-import type { User, UserValidity } from "./user.model";
-import { DynamoDb } from "../config/aws/config.aws.dynamodb";
+import {BAD_REQUEST, OK} from "../../modules/status";
+import type {User, UserValidity} from "./user.model";
+import {DynamoDb} from "../config/aws/config.aws.dynamodb";
 import logger from "../../logger";
-import { UserTableName } from "../config/aws/user.aws.dynamodb";
-import { isObjectEmpty } from "../../modules/util";
+import {UserTableName} from "../config/aws/user.aws.dynamodb";
+import {isObjectEmpty} from "../../modules/util";
+import {generateSessionId} from "../session/session.service";
+import {SessionRole} from "../session/session.model";
 
 export const createNewUser = async ({ params }) => {
   if (!params) {
@@ -30,6 +32,7 @@ export const createNewUser = async ({ params }) => {
     Key: {
       ...params,
     },
+    ProjectionExpression: "id, timeCreated",
   };
 
   try {
@@ -41,6 +44,7 @@ export const createNewUser = async ({ params }) => {
         )}] :::`
       );
       const user: User = existingUser.Item;
+      user.token = generateSessionId(user.id, SessionRole.User);
       return Promise.resolve({
         statusCode: OK,
         data: user,
@@ -63,9 +67,14 @@ export const createNewUser = async ({ params }) => {
     logger.info(
       `::: New user created with param [${JSON.stringify(userParams.Item)}] :::`
     );
+
     return Promise.resolve({
       statusCode: OK,
-      data: userParams.Item,
+      data: {
+        id: userParams.Item.id,
+        token: generateSessionId(userParams.Item.id, SessionRole.User),
+        timeCreated: userParams.Item.timeCreated,
+      },
     });
   } catch (e) {
     logger.error(
