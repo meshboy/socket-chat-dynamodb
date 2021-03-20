@@ -34,7 +34,7 @@ describe("Chat Interface", () => {
     done();
   });
 
-  xit("should receive welcome message", () => {
+  it("should receive welcome message", () => {
     const client = io.connect(url, options);
 
     client.on(SocketTopics.HELLO, (message) => {
@@ -84,7 +84,6 @@ describe("Chat Interface", () => {
 
     // message received
     client.on(`${session.id}:${sender.recipientId}`, (receiver: Chat) => {
-      console.log(receiver)
       receiver.should.exist;
       sender.message.should.be.equal(receiver.message);
     });
@@ -93,5 +92,4 @@ describe("Chat Interface", () => {
       logger.error(error);
     });
   });
-
 });
