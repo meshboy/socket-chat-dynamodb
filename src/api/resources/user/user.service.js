@@ -1,12 +1,12 @@
 import Joi from "joi";
-import {BAD_REQUEST, OK} from "../../modules/status";
-import type {User, UserValidity} from "./user.model";
-import {DynamoDb} from "../config/aws/config.aws.dynamodb";
+import { BAD_REQUEST, OK } from "../../modules/status";
+import type { User, UserValidity } from "./user.model";
+import { DynamoDb } from "../config/aws/config.aws.dynamodb";
 import logger from "../../logger";
-import {UserTableName} from "../config/aws/user.aws.dynamodb";
-import {isObjectEmpty} from "../../modules/util";
-import {generateSessionId} from "../session/session.service";
-import {SessionRole} from "../session/session.model";
+import { UserTableName } from "../config/aws/user.aws.dynamodb";
+import { isObjectEmpty } from "../../modules/util";
+import { generateSessionId } from "../session/session.service";
+import { SessionRole } from "../session/session.model";
 
 export const createNewUser = async ({ params }) => {
   if (!params) {
@@ -27,29 +27,13 @@ export const createNewUser = async ({ params }) => {
     });
   }
 
-  const existUserParams = {
-    TableName: UserTableName,
-    Key: {
-      ...params,
-    },
-    ProjectionExpression: "id, timeCreated",
-  };
-
   try {
-    const existingUser = await DynamoDb().get(existUserParams).promise();
-    if (existingUser && !isObjectEmpty(existingUser)) {
-      logger.info(
-        `::: Existing user found with a response [${JSON.stringify(
-          existingUser
-        )}] :::`
-      );
-      const user: User = existingUser.Item;
-      user.token = generateSessionId(user.id, SessionRole.User);
-      return Promise.resolve({
-        statusCode: OK,
-        data: user,
-      });
-    }
+    const user: User = await findUserById(params.id);
+    user.token = generateSessionId(user.id, SessionRole.User);
+    return Promise.resolve({
+      statusCode: OK,
+      data: user,
+    });
 
     const currentTime = new Date().getTime();
     const userParams = {
@@ -144,4 +128,25 @@ export const validateExistingUser = async ({ params }) => {
     statusCode: OK,
     data: userValidityList,
   });
+};
+
+export const findUserById: User = async (id: string) => {
+  const existUserParams = {
+    TableName: UserTableName,
+    Key: {
+      id,
+    },
+    ProjectionExpression: "id, timeCreated",
+  };
+
+  const existingUser = await DynamoDb().get(existUserParams).promise();
+  if (existingUser && !isObjectEmpty(existingUser)) {
+    logger.info(
+      `::: Existing user found with a response [${JSON.stringify(
+        existingUser
+      )}] :::`
+    );
+    return existingUser.Item;
+  }
+  throw `User with id [${id}] is not found`;
 };

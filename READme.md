@@ -98,6 +98,50 @@ _Response_
 ```
 
 
-chat topics 
+## send chat 
 
-- authentication (payload : { token })
+__Event Name__ 
+`chatMessage`
+
+__Event PayLoad__
+
+```javascript
+{
+  token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZha2VVc2VySWQiLCJyb2xlIjoidXNlciIsImlhdCI6MTYxNjI2NjkyMH0.f2vzMfOLNAwH4I8AUSQ-TrU-1ykmvyhfOv2SWhTfZdc',
+  message: 'hello Admoni bobo',
+  senderUsername: 'sender john',
+  recipientUsername: 'receiver mike',
+  messageType: 'TEXT',
+  recipientId: 'fakeRecipient',
+  timeCreated: 1616266920605
+}
+```
+
+## Receive chat 
+
+__Event Name__
+`senderId:recipientId`
+
+__Event PayLoad__
+```javascript
+{
+  message: 'hello Admoni bobo',
+  senderUsername: 'sender john',
+  recipientUsername: 'receiver mike',
+  messageType: 'TEXT',
+  recipientId: 'fakeRecipient',
+  timeCreated: 1616267123089
+}
+
+```
+
+
+## Error Listener
+
+__Event Name__
+errorMessage
+
+__unauthorised error__
+```javascript
+{"status":false,"message":"UN_AUTHORISED"}
+```

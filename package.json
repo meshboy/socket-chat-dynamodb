@@ -4,7 +4,8 @@
   "description": "Chat Api",
   "main": "lib/index.js",
   "scripts": {
-    "test": "flow check && mocha -r @babel/register tests/* test/**/*",
+    "test": "flow check && mocha -r @babel/register tests tests/unit/*",
+    "integration-test": "flow check && mocha -r @babel/register --timeout 30000 tests/integration/*",
     "build": "npm run build:lib && npm run build:flow",
     "build:lib": "babel src/ -d lib/",
     "postinstall": "npm run build",
@@ -54,6 +55,7 @@
     "redis": "^3.0.2",
     "restify-cors-middleware": "^1.1.1",
     "socket.io": "^4.0.0",
+    "socket.io-client": "^4.0.0",
     "socket.io-redis": "^6.1.0",
     "socketio-auth": "^0.1.1",
     "tsscmp": "^1.0.6",

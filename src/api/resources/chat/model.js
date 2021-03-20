@@ -1,11 +1,8 @@
 export type Chat = {
   message: string,
   messageType: string,
-  senderId: string,
   recipientId: string,
+  senderUsername: string,
+  recipientUsername: string,
   timeCreated: number,
-};
-
-export const ChatTopics = {
-  OneToOneMessage: "OneToOneMessage",
 };

@@ -1,70 +1,50 @@
-import socketAuth from "socketio-auth";
-import adapter from "socket.io-redis";
+import socketIO from "socket.io";
 import type { Session } from "../../session/session.model";
 import { verifyToken } from "../../session/session.service";
-import { SocketStatus } from "./socket.model";
+import { SocketStatus, SocketTopics } from "./socket.model";
 import { RedisClient } from "../../../redis";
 import logger from "../../../logger";
+import { socketMiddleware } from "./socket.middleware";
+export const ChatSocket = ({ server }) => {
+  const io = socketIO(server);
 
-const socketAdapter = () => {
-  return adapter({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    password: process.env.REDIS_PASS,
-  });
-};
+  io.on("connection", (socket) => {
+    socket.emit(SocketTopics.HELLO, "Welcome to Admoni Chat");
 
-export const ChatSocket = ({ server, io }) => {
-  io.attach(server);
-  io.adapter(socketAdapter());
+    socket.use(socketMiddleware);
 
-  socketAuth(io, {
-    authenticate: async (socket, data, callback) => {
-      try {
-        const { token } = data;
-        const sessionUser: Session = await verifyToken(token);
+    socket.on(SocketTopics.CHAT_MESSAGE, async (data) => {
+      const { token, ...chat } = data;
+      const sessionUser: Session = await verifyToken(data.token);
+      logger.info(
+        `::: message detected with user id [${
+          sessionUser.id
+        }] with model [${JSON.stringify(chat)}]:::`
+      );
+      // const connectionStatus = await RedisClient.setAsync(
+      //   `users:${socket.id}`,
+      //   sessionUser.id,
+      //   "NX",
+      //   "EX",
+      //   30
+      // );
 
-        const canConnect = await RedisClient.setAsync(
-          `users:${sessionUser.id}`,
-          socket.id,
-          "NX",
-          "EX",
-          30
-        );
+      socket.emit(`${sessionUser.id}:${chat.recipientId}`, chat);
 
-        if (!canConnect) {
-          return callback({ message: "ALREADY_LOGGED_IN" });
-        }
+      // TODO: save in chat model
+    });
 
-        socket.user = sessionUser;
-        return callback(null, true);
-      } catch (e) {
-        return callback({ message: SocketStatus.UN_AUTHORISED });
-      }
-    },
-    postAuthenticate: async (socket) => {
-      logger.info(`::: socket [${socket.id}] re-authenticated :::`);
-
-      // Socket.IO pings connection every 25secs to check if user is still active. To renew the lock, hook into the packet
-      // event of socket connection to intercept ping packages.
-      socket.conn.on("packet", async (packet) => {
-        if (socket.auth && packet.type === "ping") {
-          await RedisClient.setAsync(
-            `users:${socket.user.id}`,
-            socket.id,
-            "XX",
-            "EX",
-            30
-          );
-        }
-      });
-    },
-    disconnect: async (socket) => {
-      logger.info(`::: socket [${socket.id}] disconnected :::`);
-
+    socket.on(SocketTopics.DISCONNECT, async (data) => {
       if (socket.user) {
         await RedisClient.delAsync(`users:${socket.user.id}`);
       }
-    },
+    });
+
+    socket.on(SocketTopics.GLOBAL_ERROR, (err) => {
+      logger.error(
+        `::: Error occurred with error message [${JSON.stringify(err)}] :::`
+      );
+      socket.emit(SocketTopics.ERROR, err);
+    });
   });
 };
