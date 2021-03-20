@@ -14,7 +14,7 @@ import logger from "../../../src/api/logger";
 import type { Chat } from "../../../src/api/resources/chat/model";
 
 describe("Chat Interface", () => {
-  const url = "http://localhost:3500";
+  const url = `http://localhost:3500/socket.io`;
   let server,
     sinonSandbox,
     options = {

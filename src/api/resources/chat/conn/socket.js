@@ -6,7 +6,7 @@ import { RedisClient } from "../../../redis";
 import logger from "../../../logger";
 import { socketMiddleware } from "./socket.middleware";
 export const ChatSocket = ({ server }) => {
-  const io = socketIO(server);
+  const io = socketIO(server, { path: "/sockets" });
 
   io.on("connection", (socket) => {
     socket.emit(SocketTopics.HELLO, "Welcome to Admoni Chat");

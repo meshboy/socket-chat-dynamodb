@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "flow check && mocha -r @babel/register tests tests/unit/*",
-    "integration-test": "flow check && mocha -r @babel/register --timeout 30000 tests/integration/*",
+    "integration-test": "flow check && mocha -r @babel/register --timeout 30000 tests/integration/**",
     "build": "npm run build:lib && npm run build:flow",
     "build:lib": "babel src/ -d lib/",
     "postinstall": "npm run build",

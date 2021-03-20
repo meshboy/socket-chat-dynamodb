@@ -8,12 +8,12 @@ import {
 } from "../../../src/api/resources/chat/conn/socket.model";
 
 describe("Chat Authentication", () => {
-  const url = "http://localhost:3500";
+  const url = `http://localhost:3500/socket.io`;
   let server,
     sinonSandbox,
     options = {
       transports: ["websocket"],
-      "force new connection": false,
+      "force new connection": true,
     };
 
   beforeEach(function (done) {
@@ -37,6 +37,7 @@ describe("Chat Authentication", () => {
     });
 
     client.on(SocketTopics.ERROR, (error) => {
+      console.log(error)
       error.should.exist;
       error.status.should.be.equal(false);
       error.message.should.be.equal(SocketStatus.UN_AUTHORISED);
