@@ -29,11 +29,13 @@ export const createNewUser = async ({ params }) => {
 
   try {
     const user: User = await findUserById(params.id);
-    user.token = generateSessionId(user.id, SessionRole.User);
-    return Promise.resolve({
-      statusCode: OK,
-      data: user,
-    });
+    if (user != null) {
+      user.token = generateSessionId(user.id, SessionRole.User);
+      return Promise.resolve({
+        statusCode: OK,
+        data: user,
+      });
+    }
 
     const currentTime = new Date().getTime();
     const userParams = {
