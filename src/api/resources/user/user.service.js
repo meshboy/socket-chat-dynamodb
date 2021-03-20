@@ -148,5 +148,5 @@ export const findUserById: User = async (id: string) => {
     );
     return existingUser.Item;
   }
-  throw `User with id [${id}] is not found`;
+  return null;
 };
