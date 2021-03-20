@@ -101,6 +101,7 @@ _Response_
 ## send chat 
 
 __Event Name__ 
+
 `chatMessage`
 
 __Event PayLoad__
@@ -120,9 +121,12 @@ __Event PayLoad__
 ## Receive chat 
 
 __Event Name__
+
 `senderId:recipientId`
 
 __Event PayLoad__
+
+
 ```javascript
 {
   message: 'hello Admoni bobo',
@@ -135,13 +139,17 @@ __Event PayLoad__
 
 ```
 
+`messageType: TEXT, FILE`
+
 
 ## Error Listener
 
 __Event Name__
-errorMessage
+
+`errorMessage`
 
 __unauthorised error__
+
 ```javascript
 {"status":false,"message":"UN_AUTHORISED"}
 ```
