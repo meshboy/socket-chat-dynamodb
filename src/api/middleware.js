@@ -19,8 +19,12 @@ export const secureRoute = (req, res, next) => {
 
   const path = req.path;
   const method = req.method;
+  console.log(path);
 
-  if (Object.is(method, "GET") && path === "/") {
+  if (
+    (Object.is(method, "GET") && path === "/") ||
+    (Object.is(method, "GET") && path.includes("/socket.io"))
+  ) {
     return next();
   }
 

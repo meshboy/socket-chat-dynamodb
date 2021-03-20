@@ -4,9 +4,9 @@ import app from "./api/server";
 import { ChatSocket } from "./api/resources/chat/conn/socket";
 
 // handle all uncaught errors
-process.on("uncaughtException", function (err) {
-  logger.error(`uncaught error has been fired with Error: ${err}`);
-});
+// process.on("uncaughtException", function (err) {
+//   logger.error(`uncaught error has been fired with Error: ${err}`);
+// });
 
 const server = http.createServer(app);
 const port = process.env.PORT || 80;

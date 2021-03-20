@@ -98,9 +98,7 @@ _Response_
 ```
 
 
-# Chat Path : /socket.io
-
-`e.g http://localhost:3500/socket.io`
+# Chat Path 
 
 ## send chat 
 

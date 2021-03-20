@@ -14,7 +14,7 @@ import logger from "../../../src/api/logger";
 import type { Chat } from "../../../src/api/resources/chat/model";
 
 describe("Chat Interface", () => {
-  const url = `http://localhost:3500/socket.io`;
+  const url = `http://localhost:3500`;
   let server,
     sinonSandbox,
     options = {
@@ -38,6 +38,7 @@ describe("Chat Interface", () => {
     const client = io.connect(url, options);
 
     client.on(SocketTopics.HELLO, (message) => {
+      console.log(message)
       message.should.equal("Welcome to Admoni Chat");
     });
   });
