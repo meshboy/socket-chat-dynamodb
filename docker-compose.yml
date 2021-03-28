@@ -3,6 +3,6 @@ services:
   web:
     build: .
     ports:
-      - "80:80"
+      - "3500:3500"
     env_file:
       - .env
