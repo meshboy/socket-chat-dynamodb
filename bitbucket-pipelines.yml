@@ -1,0 +1,18 @@
+image: node:10.15.3
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script:
+          - npm install
+          - npm test
+  branches:
+    master:
+      - step:
+          script:
+            - npm install
+            - npm test
+            - git push https://heroku:$API_KEY@git.heroku.com/$APP_NAME.git
+

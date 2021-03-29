@@ -11,8 +11,7 @@ import { ChatSocket } from "./api/resources/chat/conn/socket";
 const server = http.createServer(app);
 const port = process.env.PORT || 80;
 
-const io = require("socket.io")(server);
-ChatSocket(io);
+ChatSocket({ server });
 
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
