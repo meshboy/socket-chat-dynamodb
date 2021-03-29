@@ -1,7 +1,5 @@
 import express from "express";
 import cors from "cors";
-import compression from "compression";
-import bodyParser from "body-parser";
 
 import { router } from "./router";
 import middleware from "./middleware";
@@ -15,10 +13,6 @@ connect()
   .catch(() => {});
 
 const app = express();
-app.use(compression());
-app.use(bodyParser.json({ limit: "100mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
-
 middleware(app);
 
 const corsOption = {

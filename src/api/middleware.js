@@ -4,6 +4,8 @@ import compare from "tsscmp";
 import logger from "./logger";
 import bodyparser from "body-parser";
 import { errorHandler } from "./modules/error-handler";
+import compression from "compression";
+import bodyParser from "body-parser";
 
 const checkAccess = (name: string, password: string): Boolean => {
   let valid: Boolean = true;
@@ -19,7 +21,6 @@ export const secureRoute = (req, res, next) => {
 
   const path = req.path;
   const method = req.method;
-  console.log(path);
 
   if (
     (Object.is(method, "GET") && path === "/") ||
@@ -41,6 +42,19 @@ export const secureRoute = (req, res, next) => {
 };
 
 const middleware = (app) => {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+  app.use(compression());
+  app.use(bodyParser.json({ limit: "100mb", extended: true }));
+  app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
+
   app.use(bodyparser.urlencoded({ extended: true }));
   app.use(bodyparser.json());
   app.use(bodyparser.json({ limit: "500mb" }));

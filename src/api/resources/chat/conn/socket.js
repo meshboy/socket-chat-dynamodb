@@ -1,15 +1,12 @@
-import socketIO from "socket.io";
 import type { Session } from "../../session/session.model";
 import { verifyToken } from "../../session/session.service";
 import { SocketStatus, SocketTopics } from "./socket.model";
 import { RedisClient } from "../../../redis";
 import logger from "../../../logger";
 import { socketMiddleware } from "./socket.middleware";
-export const ChatSocket = ({ server }) => {
-  const path = __dirname + "/socket.io";
-  const io = socketIO.listen();
-
+export const ChatSocket = (io) => {
   io.on("connection", (socket) => {
+    logger.info(`::: connection with id [${socket.id}] :::`);
     socket.emit(SocketTopics.HELLO, "Welcome to Admoni Chat");
 
     socket.use(socketMiddleware);
