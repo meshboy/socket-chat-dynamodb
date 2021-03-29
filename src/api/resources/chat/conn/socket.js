@@ -29,7 +29,8 @@ export const ChatSocket = (io) => {
 
       socket.emit(`${sessionUser.id}:${chat.recipientId}`, chat);
 
-      // TODO: save in chat model
+      // create chat pushed by users
+      createChats(chat).then((doc) => {});
     });
 
     socket.on(SocketTopics.DISCONNECT, async (data) => {
