@@ -1,4 +1,4 @@
-## Test Base URL : https://admoni.herokuapp.com
+## Test Base URL : localhost:80
 
 ### Authentication: Basic Auth
 
