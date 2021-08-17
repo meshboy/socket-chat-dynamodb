@@ -39,7 +39,7 @@ fileObject;
 
 `Add new account to server`
 
-#### please note: a user that wants to use admoni needs to be added to the db
+#### please note: a user that wants to use this system needs to be added to the db as only the id would be stored
 
 `POST /user`
 
@@ -62,7 +62,7 @@ _Response_
     }
 ```
 
-`Validate if id is on admoni server`
+`Validate if id is on server`
 
 `POST /user/validate`
 
@@ -111,7 +111,7 @@ __Event PayLoad__
 ```javascript
 {
   token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZha2VVc2VySWQiLCJyb2xlIjoidXNlciIsImlhdCI6MTYxNjI2NjkyMH0.f2vzMfOLNAwH4I8AUSQ-TrU-1ykmvyhfOv2SWhTfZdc',
-  message: 'hello Admoni bobo',
+  message: 'hello bobo',
   senderUsername: 'sender john',
   recipientUsername: 'receiver mike',
   messageType: 'TEXT',
@@ -131,7 +131,7 @@ __Event PayLoad__
 
 ```javascript
 {
-  message: 'hello Admoni bobo',
+  message: 'hello  bobo',
   senderUsername: 'sender john',
   recipientUsername: 'receiver mike',
   messageType: 'TEXT',
