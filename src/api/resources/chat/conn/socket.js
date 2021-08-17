@@ -4,6 +4,7 @@ import { SocketStatus, SocketTopics } from "./socket.model";
 import { RedisClient } from "../../../redis";
 import logger from "../../../logger";
 import { socketMiddleware } from "./socket.middleware";
+import { createChats } from "../chat.service";
 export const ChatSocket = (io) => {
   io.on("connection", (socket) => {
     logger.info(`::: connection with id [${socket.id}] :::`);
@@ -12,6 +13,7 @@ export const ChatSocket = (io) => {
     socket.use(socketMiddleware);
 
     socket.on(SocketTopics.CHAT_MESSAGE, async (data) => {
+      console.log(data)
       const { token, ...chat } = data;
       const sessionUser: Session = await verifyToken(data.token);
       logger.info(
@@ -27,9 +29,10 @@ export const ChatSocket = (io) => {
       //   30
       // );
 
-      socket.emit(`${sessionUser.id}:${chat.recipientId}`, chat);
+      io.emit(`${sessionUser.id}:${chat.recipientId}`, JSON.stringify(chat));
 
       // create chat pushed by users
+      chat.senderId = sessionUser.id;
       createChats(chat).then((doc) => {});
     });
 
