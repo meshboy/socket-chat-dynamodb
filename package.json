@@ -1,5 +1,5 @@
 {
-  "name": "admoni-chat-service",
+  "name": "chat-service",
   "version": "1.0.0",
   "description": "Chat Api",
   "main": "lib/index.js",
